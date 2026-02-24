@@ -2,7 +2,7 @@
 
 Bem-vindo ao repositório do meu portfólio! Este projeto foi desenvolvido para centralizar minhas experiências, projetos e habilidades técnicas de uma forma visual e interativa.
 
- **Acesse o portfólio ao vivo aqui:** [gabrielnavas.com.br](https://www.gabrielnavas.com.br)
+ **Acesse o portfólio** -> [Gabriel Portfolio](https://portfolio-pi-sable-62.vercel.app/)
 
 ---
 
