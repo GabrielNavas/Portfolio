@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gabriel Navarro - Desenvolvedor Full Stack</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(124, 58, 237, 0.2);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #7c3aed, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.3); }
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #7c3aed;
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 0 5%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(124, 58, 237, 0.3), transparent);
+            border-radius: 50%;
+            top: -250px;
+            right: -250px;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(-30px, 30px); }
+        }
+
+        .hero-content {
+            max-width: 800px;
+            z-index: 1;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(124, 58, 237, 0.2);
+            border: 1px solid #7c3aed;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            animation: slideDown 0.8s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            animation: slideRight 0.8s ease-out 0.2s both;
+        }
+
+        @keyframes slideRight {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #7c3aed, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #b4b4b4;
+            margin-bottom: 2rem;
+            animation: slideRight 0.8s ease-out 0.4s both;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            animation: slideRight 0.8s ease-out 0.6s both;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background: #7c3aed;
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(124, 58, 237, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(124, 58, 237, 0.6);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #fff;
+            border: 2px solid #7c3aed;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(124, 58, 237, 0.1);
+            transform: translateY(-2px);
+        }
+
+        section {
+            padding: 5rem 5%;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, #7c3aed, #a78bfa);
+            border-radius: 2px;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: rgba(20, 20, 20, 0.8);
+            border: 1px solid rgba(124, 58, 237, 0.2);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.3s;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
+        pointer-events: none;}
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            border-color: #7c3aed;
+            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.3);
+        }
+
+        .project-card:hover::before {
+            opacity: 1;
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .project-title {
+            font-size: 1.3rem;
+            color: #fff;
+        }
+
+        .github-btn {
+            background: rgba(124, 58, 237, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            text-decoration: none;
+            color: #a78bfa;
+            transition: all 0.3s;
+        }
+
+        .github-btn:hover {
+            background: #7c3aed;
+            color: #fff;
+        }
+
+        .project-description {
+            color: #b4b4b4;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tech-tag {
+            background: rgba(124, 58, 237, 0.15);
+            color: #a78bfa;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            border: 1px solid rgba(124, 58, 237, 0.3);
+        }
+
+        .about-section {
+            background: rgba(20, 20, 20, 0.5);
+        }
+
+        .about-content {
+            max-width: 900px;
+            margin: 0 auto;
+            line-height: 1.8;
+            color: #b4b4b4;
+            font-size: 1.1rem;
+        }
+
+        .skills-section {
+            background: rgba(15, 15, 15, 0.8);
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .skill-card {
+            background: rgba(20, 20, 20, 0.8);
+            border: 1px solid rgba(124, 58, 237, 0.2);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .skill-card:hover {
+            border-color: #7c3aed;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(124, 58, 237, 0.2);
+        }
+
+        .skill-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .skill-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .contact-section {
+            background: rgba(20, 20, 20, 0.5);
+            text-align: center;
+        }
+
+        .contact-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .contact-content p {
+            font-size: 1.2rem;
+            color: #b4b4b4;
+            margin-bottom: 2rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .social-link {
+            width: 50px;
+            height: 50px;
+            background: rgba(124, 58, 237, 0.2);
+            border: 1px solid #7c3aed;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            transition: all 0.3s;
+            text-decoration: none;
+            color: #a78bfa;
+        }
+
+        .social-link:hover {
+            background: #7c3aed;
+            color: #fff;
+            transform: translateY(-5px) rotate(360deg);
+        }
+
+        footer {
+            background: #0a0a0a;
+            padding: 2rem 5%;
+            text-align: center;
+            color: #666;
+            border-top: 1px solid rgba(124, 58, 237, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .scroll-indicator {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+            opacity: 0.7;
+            font-size: 2rem;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-10px); }
+            60% { transform: translateX(-50%) translateY(-5px); }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">Gabriel Navarro</div>
+        <ul class="nav-links">
+            <li><a href="#projetos">Projetos</a></li>
+            <li><a href="#sobre">Sobre</a></li>
+            <li><a href="#curriculo">Currículo</a></li>
+            <li><a href="#contato">Contato</a></li>
+        </ul>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <div class="badge">Full Stack • Cloud • DevOps</div>
+            <h1>Desenvolvedor <span class="gradient-text">Full Stack</span></h1>
+            <p>Base sólida em APIs REST, SQL e Docker. Interesse em Cloud/DevOps (Kubernetes, CI/CD) e soluções com impacto sustentável (ESG).</p>
+            <div class="cta-buttons">
+                <a href="#projetos" class="btn btn-primary">Ver projetos</a>
+                <a href="#curriculo" class="btn btn-secondary">Ver currículo</a>
+            </div>
+        </div>
+        <div class="scroll-indicator">↓</div>
+    </section>
+
+    <section id="projetos">
+        <h2 class="section-title">Projetos em destaque</h2>
+        <div class="projects-grid">
+            <div class="project-card">
+                <div class="project-header">
+                    <h3 class="project-title">API ESG – Gestão Sustentável</h3>
+                    <a href="https://github.com/GabrielNavas/ESG-API-SpringBoot" class="github-btn" target="_blank" rel="noopener noreferrer" aria-label="Abrir repositório no GitHub">GitHub</a>
+                </div>
+                <p class="project-description">API RESTful em Java + Spring Boot + Oracle, com autenticação, controle de acesso e deploy Docker.</p>
+                <div class="tech-tags">
+                    <span class="tech-tag">Java</span>
+                    <span class="tech-tag">Spring Boot</span>
+                    <span class="tech-tag">Oracle</span>
+                    <span class="tech-tag">Docker</span>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-header">
+                    <h3 class="project-title">Solução Web – Parceiros iFood</h3>
+                    <a href="https://github.com/GabrielNavas/ifood-parceiros" class="github-btn" target="_blank" rel="noopener noreferrer" aria-label="Abrir repositório no GitHub">GitHub</a>
+                </div>
+                <p class="project-description">Aplicação web para gestão financeira de parceiros, com HTML, CSS, JS e Oracle SQL.</p>
+                <div class="tech-tags">
+                    <span class="tech-tag">HTML</span>
+                    <span class="tech-tag">CSS</span>
+                    <span class="tech-tag">JavaScript</span>
+                    <span class="tech-tag">Oracle SQL</span>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-header">
+                    <h3 class="project-title">Gerenciador de Despesas</h3>
+                    <a href="https://github.com/GabrielNavas/Gerenciador-de-Despesas" class="github-btn" target="_blank" rel="noopener noreferrer" aria-label="Abrir repositório no GitHub">GitHub</a>
+                </div>
+                <p class="project-description">Projeto desenvolvido em Java com Spring Boot para controle básico de despesas pessoais via interface web.
+</p>
+                <div class="tech-tags">
+                    <span class="tech-tag">HTML</span>
+                    <span class="tech-tag">CSS</span>
+                    <span class="tech-tag">Java</span>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-header">
+                    <h3 class="project-title">Sistema de Drones Híbridos Aquático–Aéreo</h3>
+                    <a href="https://github.com/GabrielNavas/drone-hibrido-aquatico-aereo" class="github-btn" target="_blank" rel="noopener noreferrer" aria-label="Abrir repositório no GitHub">GitHub</a>
+                </div>
+                <p class="project-description">Projeto experimental em Python + Java, com rastreamento e controle em tempo real.</p>
+                <div class="tech-tags">
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">Java</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="sobre" class="about-section">
+        <h2 class="section-title">Sobre mim</h2>
+        <div class="about-content">
+            <p>Sou o Gabriel, formado em Análise e Desenvolvimento de Sistemas pela FIAP (2025). Sigo evoluindo em arquitetura de APIs, SQL, Docker e ferramentas de Cloud/DevOps como Kubernetes e CI/CD, aplicando esses conhecimentos em projetos reais.</p>
+            <br>
+            <p>Minha trajetória na Ericsson e na Embraer ensinou-me a trabalhar com qualidade, automação e confiabilidade — fundamentos que trago para o desenvolvimento de software. Acredito em tecnologia com propósito: soluções eficientes e sustentáveis (ESG) que geram impacto real.</p>
+        </div>
+    </section>
+
+    <section id="curriculo" class="skills-section">
+        <h2 class="section-title">Currículo</h2>
+        
+        <div style="max-width: 1000px; margin: 0 auto 3rem; text-align: center;">
+            <p style="font-size: 1.2rem; line-height: 1.8; color: #b4b4b4;">
+                Desenvolvedor Full Stack (Java/Node/React), com base sólida em APIs REST, SQL e Docker. 
+                Experiência prática integrando front-end e back-end, e construindo dashboards de dados. Interesse em 
+                Cloud/DevOps (Kubernetes, CI/CD) e soluções com impacto sustentável (ESG). Busco vagas de emprego para contribuir com 
+                produtos reais e evoluir com mentoria técnica.
+            </p>
+        </div>
+        
+        <div style="max-width: 1200px; margin: 0 auto 4rem;">
+    <h3 style="font-size: 2rem; margin-bottom: 2rem; color: #a78bfa;">Habilidades Técnicas</h3>
+
+    <div class="skills-grid" style="margin-bottom: 3rem;">
+        
+        <div class="skill-card">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" width="40" height="40" alt="Java" />
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg" width="40" height="40" alt="Spring Boot" />
+            <div class="skill-name">Java & Spring</div>
+        </div>
+        
+        <div class="skill-card">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" width="40" height="40" alt="Python" />
+            <div class="skill-name">Python</div>
+        </div>
+        
+        <div class="skill-card">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" width="40" height="40" alt="React" />
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" width="40" height="40" alt="Node.js" />
+            <div class="skill-name">React & Node.js</div>
+        </div>
+        
+        <div class="skill-card">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" width="40" height="40" alt="MySQL" />
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/oracle/oracle-original.svg" width="40" height="40" alt="Oracle" />
+            <div class="skill-name">SQL & Oracle</div>
+        </div>
+        
+        <div class="skill-card">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" width="40" height="40" alt="Docker" />
+            <div class="skill-name">Docker</div>
+        </div>
+        
+        <div class="skill-card">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-plain.svg" width="40" height="40" alt="Kubernetes" />
+            <div class="skill-name">Kubernetes</div>
+        </div>
+        
+        <div class="skill-card">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" width="40" height="40" alt="HTML5" />
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" width="40" height="40" alt="CSS3" />
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" width="40" height="40" alt="JavaScript" />
+            <div class="skill-name">HTML/CSS/JS</div>
+        </div>
+        
+        <div class="skill-card">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg" width="40" height="40" alt="Azure" />
+            <div class="skill-name">Cloud & Azure</div>
+        </div>
+        
+        <div class="skill-card">
+            <span style="font-size: 40px;">📊</span>
+            <div class="skill-name">Power BI</div>
+        </div>
+
+    </div>
+</div>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); gap: 2rem;">
+                <div class="project-card">
+                    <h4 style="color: #7c3aed; font-size: 1.2rem; margin-bottom: 1rem;">Linguagens & Front-end:</h4>
+                    <p style="color: #b4b4b4;">HTML, CSS, JavaScript, React, Bootstrap</p>
+                </div>
+                
+                <div class="project-card">
+                    <h4 style="color: #7c3aed; font-size: 1.2rem; margin-bottom: 1rem;">Back-end:</h4>
+                    <p style="color: #b4b4b4;">Java, Spring Boot, Node.js, APIs REST</p>
+                </div>
+                
+                <div class="project-card">
+                    <h4 style="color: #7c3aed; font-size: 1.2rem; margin-bottom: 1rem;">Banco de Dados:</h4>
+                    <p style="color: #b4b4b4;">Oracle PL/SQL, MySQL, MongoDB</p>
+                </div>
+                
+                <div class="project-card">
+                    <h4 style="color: #7c3aed; font-size: 1.2rem; margin-bottom: 1rem;">DevOps & Cloud:</h4>
+                    <p style="color: #b4b4b4;">Docker, Kubernetes (básico), Azure</p>
+                </div>
+                
+                <div class="project-card">
+                    <h4 style="color: #7c3aed; font-size: 1.2rem; margin-bottom: 1rem;">Ferramentas:</h4>
+                    <p style="color: #b4b4b4;">Git/GitHub, Power BI, Figma, Android Studio</p>
+                </div>
+                
+                <div class="project-card">
+                    <h4 style="color: #7c3aed; font-size: 1.2rem; margin-bottom: 1rem;">Outros:</h4>
+                    <p style="color: #b4b4b4;">Excel Avançado, Google Workspace</p>
+                </div>
+            </div>
+        </div>
+
+        <div style="max-width: 1200px; margin: 0 auto;">
+            <h3 style="font-size: 2rem; margin-bottom: 2rem; color: #a78bfa;">Experiência Profissional</h3>
+            
+            <div style="display: flex; flex-direction: column; gap: 2rem;">
+                <div class="project-card" style="border-left: 4px solid #7c3aed;">
+                    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem; flex-wrap: wrap; gap: 1rem;">
+                        <div>
+                            <h4 style="color: #fff; font-size: 1.4rem; margin-bottom: 0.5rem;">Operador de Produção Jr.</h4>
+                            <p style="color: #a78bfa; font-size: 1.1rem;">Ericsson Telecomunicações Ltda</p>
+                        </div>
+                        <div style="text-align: right;">
+                            <p style="color: #888; font-size: 0.95rem;">Jan/2021 – Atual</p>
+                            <p style="color: #888; font-size: 0.95rem;">São José dos Campos, SP</p>
+                        </div>
+                    </div>
+                    <ul style="color: #b4b4b4; line-height: 1.8; margin-left: 1.5rem;">
+                        <li>Atuação em ambiente industrial de alta confiabilidade e padronização (KPIs, rastreabilidade).</li>
+                        <li>Desenvolvimento de suportes personalizados com impressão 3D, reduzindo falhas operacionais e melhorando eficiência.</li>
+                        <li>Vivência com automação de processos, controle de qualidade e melhoria contínua — base sólida para práticas DevOps.</li>
+                    </ul>
+                </div>
+
+                <div class="project-card" style="border-left: 4px solid #7c3aed;">
+                    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem; flex-wrap: wrap; gap: 1rem;">
+                        <div>
+                            <h4 style="color: #fff; font-size: 1.4rem; margin-bottom: 0.5rem;">Jovem Aprendiz</h4>
+                            <p style="color: #a78bfa; font-size: 1.1rem;">Embraer S/A</p>
+                        </div>
+                        <div style="text-align: right;">
+                            <p style="color: #888; font-size: 0.95rem;">Jan/2019 – Dez/2020</p>
+                            <p style="color: #888; font-size: 0.95rem;">São José dos Campos, SP</p>
+                        </div>
+                    </div>
+                    <ul style="color: #b4b4b4; line-height: 1.8; margin-left: 1.5rem;">
+                        <li>Apoio em manutenção de máquinas e processos industriais, com foco em padronização e qualidade.</li>
+                        <li>Primeira experiência em ambiente técnico de engenharia, desenvolvendo disciplina e precisão operacional.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div style="max-width: 1200px; margin: 4rem auto 0;">
+            <h3 style="font-size: 2rem; margin-bottom: 2rem; color: #a78bfa;">Formação Acadêmica</h3>
+            
+            <div class="project-card" style="border-left: 4px solid #7c3aed;">
+                <div style="display: flex; justify-content: space-between; align-items: start; flex-wrap: wrap; gap: 1rem;">
+                    <div>
+                        <h4 style="color: #fff; font-size: 1.4rem; margin-bottom: 0.5rem;">Bacharelado em Ciência da Computação</h4>
+                        <p style="color: #a78bfa; font-size: 1.1rem;">Anhembi Morumbi - Sâo José dos Campos, SP</p>
+                    </div>
+                    <div style="text-align: right;">
+                        <p style="color: #888; font-size: 0.95rem;">Fev/2026 – Dez/2030</p>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="project-card" style="border-left: 4px solid #7c3aed;">
+                <div style="display: flex; justify-content: space-between; align-items: start; flex-wrap: wrap; gap: 1rem;">
+                    <div>
+                        <h4 style="color: #fff; font-size: 1.4rem; margin-bottom: 0.5rem;">Tecnólogo em Análise e Desenvolvimento de Sistemas</h4>
+                        <p style="color: #a78bfa; font-size: 1.1rem;">FIAP — São Paulo, SP</p>
+                    </div>
+                    <div style="text-align: right;">
+                        <p style="color: #888; font-size: 0.95rem;">Fev/2024 – Nov/2025</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="max-width: 1200px; margin: 4rem auto 0;">
+            <h3 style="font-size: 2rem; margin-bottom: 2rem; color: #a78bfa;">Cursos e Capacitações</h3>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 1.5rem;">
+                <div class="project-card">
+                    <p style="color: #b4b4b4; font-size: 1.05rem;">• Desenvolvimento Full Stack – One Bit Code (2023–2024)</p>
+                </div>
+                
+                <div class="project-card">
+                    <p style="color: #b4b4b4; font-size: 1.05rem;">• Kubernetes – Alura</p>
+                </div>
+                
+                <div class="project-card">
+                    <p style="color: #b4b4b4; font-size: 1.05rem;">• Cloud Computing – Alura</p>
+                </div>
+                
+            </div>
+        </div>
+
+        <div style="max-width: 1200px; margin: 4rem auto 0;">
+            <h3 style="font-size: 2rem; margin-bottom: 2rem; color: #a78bfa;">Idiomas</h3>
+            
+            <div style="display: flex; gap:1.5rem; flex-wrap: wrap;">
+                <div class="tech-tag" style="padding: 1rem 2rem; font-size: 1.05rem;">
+                    Inglês — Avançado (intercâmbio na Austrália - Lexis School, 2023)
+                </div>
+                
+                <div class="tech-tag" style="padding: 1rem 2rem; font-size: 1.05rem;">
+                    Espanhol — Básico
+                </div>
+            </div>
+        </div>
+
+        <div style="max-width: 1200px; margin: 4rem auto 0;">
+            <h3 style="font-size: 2rem; margin-bottom: 2rem; color: #a78bfa;">Diferenciais</h3>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); gap: 1.5rem;">
+                <div class="project-card">
+                    <p style="color: #b4b4b4; font-size: 1.05rem; line-height: 1.8;">• Aplicação prática de cultura DevOps (logs, rastreabilidade e automação).</p>
+                </div>
+                
+                <div class="project-card">
+                    <p style="color: #b4b4b4; font-size: 1.05rem; line-height: 1.8;">• Capacidade de análise de dados e otimização de processos.</p>
+                </div>
+                
+                <div class="project-card">
+                    <p style="color: #b4b4b4; font-size: 1.05rem; line-height: 1.8;">• Senso de produto e sustentabilidade tecnológica.</p>
+                </div>
+                
+                <div class="project-card">
+                    <p style="color: #b4b4b4; font-size: 1.05rem; line-height: 1.8;">• Perfil resiliente, adaptável e orientado a resultado mensurável.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contato" class="contact-section">
+        <h2 class="section-title">Vamos conversar?</h2>
+        <div class="contact-content">
+            <p>Aberto a oportunidades de estágio, vagas de emprego e projetos.</p>
+            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=gabrielnavas2212%40gmail.com&su=Contato%20via%20Portf%C3%B3lio%20%E2%80%94%20Gabriel%20Navarro&body=Ol%C3%A1%20Gabriel%2C%0A%0AVi%20seu%20portf%C3%B3lio%20e%20gostaria%20de%20conversar.%0APodemos%20falar%20sobre%20%5Bassunto%2Fvaga%2Fprojeto%5D%3F%20%0A%0AObrigado%21%0A%5BAssine%20com%20seu%20nome%5D" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Enviar e-mail</a>
+            <div class="social-links">
+                <a href="https://www.linkedin.com/in/navarrogabriel/" class="social-link" title="LinkedIn" target="_blank" rel="noopener noreferrer">in</a>
+                <a href="https://github.com/GabrielNavas" class="social-link" title="GitHub" target="_blank" rel="noopener noreferrer">gh</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2025 Gabriel Navarro</p>
+    </footer>
+
+    <script>
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Hide scroll indicator on scroll
+        window.addEventListener('scroll', () => {
+            const indicator = document.querySelector('.scroll-indicator');
+            if (window.scrollY > 100) {
+                indicator.style.opacity = '0';
+            } else {
+                indicator.style.opacity = '0.7';
+            }
+        });
+
+        // Intersection Observer for animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        });
+
+        document.querySelectorAll('.project-card, .skill-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s ease-out';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
